@@ -4,6 +4,7 @@
 
 using awards::RankList;
 using awards::AwardCeremonyActions;
+using ::testing::InSequence;
 
 
 class MockAwards : public AwardCeremonyActions {
@@ -15,11 +16,6 @@ class MockAwards : public AwardCeremonyActions {
   MOCK_METHOD(void, awardGold, (std::string recipient), (override));
 };
 
-
-class RankList {
-public:
-  virtual std::string getNext() = 0;
-};
 
 class RankListStub: public RankList {
 public:
@@ -44,3 +40,20 @@ private:
     int currNameIndex = -1;
 };
 
+TEST(AwardsTests, testperformAwardCeremony) {
+    
+    MockAwards awardCeremony;
+
+    {
+        
+        InSequence seq;
+        EXPECT_CALL(awardCeremony, playAnthem());
+        EXPECT_CALL(awardCeremony, awardBronze("Alan"));
+        EXPECT_CALL(awardCeremony, awardSilver("Aaron"));
+        EXPECT_CALL(awardCeremony, awardGold("Brian"));
+        EXPECT_CALL(awardCeremony, turnOffTheLightsAndGoHome());
+
+
+    }
+    awardCeremony.performAwardCeremony();
+ }
