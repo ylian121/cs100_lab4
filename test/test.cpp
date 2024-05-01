@@ -24,11 +24,13 @@ public:
 
     if (currNameIndex < namesList.size()) {
 
-        currNameIndex = (1 + currNameIndex);
+        // currNameIndex = (1 + currNameIndex);
+        return (namesList.at(currNameIndex++));
 
     }
-
-    return (namesList[currNameIndex]);
+    else{
+        return "";
+    }
 
   }
 
@@ -37,13 +39,13 @@ private:
 
     std::vector<std::string> namesList = {"Alan", "Aaron", "Brian", "John"};
 
-    int currNameIndex = -1;
+    int currNameIndex = 0;
 };
 
 TEST(AwardsTests, testperformAwardCeremony) {
     
     MockAwards awardCeremony;
-
+    RankListStub rankL;
     {
         
         InSequence seq;
@@ -55,5 +57,5 @@ TEST(AwardsTests, testperformAwardCeremony) {
 
 
     }
-    awardCeremony.performAwardCeremony();
+    performAwardCeremony(rankL, awardCeremony);
  }
