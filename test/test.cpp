@@ -1,49 +1,46 @@
 #include "gtest/gtest.h"
-#include "../include/Triangle.h"
-using shapes::Triangle;
+#include <gmock/gmock.h>  // Brings in gMock.
+#include "../include/Awards.h"
+
+using awards::RankList;
+using awards::AwardCeremonyActions;
 
 
-TEST(TriangleTests, testPerimeter) {
-    Triangle *aTriangle = new Triangle(3,3,3);
-    EXPECT_EQ (aTriangle->getPerimeter(), 9);
-}
+class MockAwards : public AwardCeremonyActions {
+ public:
+  MOCK_METHOD(void, playAnthem, (), (override));
+  MOCK_METHOD(void, turnOffTheLightsAndGoHome, (), (override));
+  MOCK_METHOD(void, awardBronze, (std::string recipient), (override));
+  MOCK_METHOD(void, awardSilver, (std::string recipient), (override));
+  MOCK_METHOD(void, awardGold, (std::string recipient), (override));
+};
 
-TEST(TriangleTests, testPerimeter2) {
-    Triangle *aTriangle = new Triangle(-3,-3,-3);
-    EXPECT_EQ (aTriangle->getPerimeter(), 0);
-}
 
-TEST(TriangleTests, testPerimeter3) {
-    Triangle *aTriangle = new Triangle(1.5, 3, 3);
-    EXPECT_EQ (aTriangle->getPerimeter(), 7.5);
-}
+class RankList {
+public:
+  virtual std::string getNext() = 0;
+};
 
-TEST(TriangleTests, testPerimeter4) {
-    Triangle *aTriangle = new Triangle(0, 0, 0);
-    EXPECT_EQ (aTriangle->getPerimeter(), 0);
-}
+class RankListStub: public RankList {
+public:
 
-TEST(TriangleTests, testPerimeterE) {
-    EXPECT_DEATH (Triangle *aTriangle = new Triangle(-5555.11, 0, 1), "ERROR: invalid input");
-}
+  virtual std::string getNext() {
 
-TEST(TriangleTests, isIso) {
-    Triangle *aTriangle = new Triangle(1,1,1);
-    EXPECT_TRUE (aTriangle->isIsosceles());
-}
+    if (currNameIndex < namesList.size()) {
 
-TEST(TriangleTests, isEq) {
-    Triangle *aTriangle = new Triangle(5,3,10);
-    EXPECT_FALSE (aTriangle->isEquilateral());
-}
+        currNameIndex = (1 + currNameIndex);
 
-TEST(TriangleTests, testArea) {
-    Triangle *aTriangle = new Triangle(5,1,10);
-    EXPECT_DOUBLE_EQ (aTriangle->getArea(), 2);
-}
+    }
 
-TEST(TriangleTests, testPerimeterT) {
-    Triangle *aTriangle = new Triangle(5,3,10);
-    aTriangle->getPerimeter();
-    EXPECT_NO_THROW(aTriangle->getPerimeter());
-}
+    return (namesList[currNameIndex]);
+
+  }
+
+
+private:
+
+    std::vector<std::string> namesList = {"Alan", "Aaron", "Brian", "John"};
+
+    int currNameIndex = -1;
+};
+
