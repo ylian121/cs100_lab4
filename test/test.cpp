@@ -1,6 +1,10 @@
+/*
+    TRIANGLE TESTS
+*/
+
 #include "gtest/gtest.h"
-#include "../include/Hailstone.h"
-using sequence::satisfiesHailstone;
+#include "../include/Triangle.h"
+using shapes::Triangle;
 
 TEST(TriangleTests, testPerimeter) {
     Triangle *aTriangle = new Triangle(3,3,3);
@@ -47,6 +51,14 @@ TEST(TriangleTests, testPerimeterT) {
     EXPECT_NO_THROW(aTriangle->getPerimeter());
 }
 
+/*
+    HAILSTONE TESTS
+*/
+
+#include "gtest/gtest.h"
+#include "../include/Hailstone.h"
+using sequence::satisfiesHailstone;
+
 TEST(HailstoneTests, testInputZero) {
     
     EXPECT_FALSE (satisfiesHailstone(0));
@@ -69,6 +81,10 @@ TEST(HailstoneTests, testInputOdd) {
     EXPECT_TRUE (satisfiesHailstone(5));
 
 }
+
+/*
+    AWARDS TESTS
+*/
 
 #include "gtest/gtest.h"
 #include <gmock/gmock.h>  // Brings in gMock.
